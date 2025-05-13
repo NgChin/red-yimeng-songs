@@ -161,50 +161,53 @@
       }
     }
 
-    @media (max-width: 767px) {
-  body {
-    font-size: 16px;
-    padding: 8px;
+   @media (max-width: 767px) {
+  /* 设置主内容垂直排列、居中 */
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
   }
 
+  /* 歌名和歌手信息居中 */
+  #songInfo {
+    order: 1;
+    text-align: center;
+    font-size: 16px;
+    margin-top: 10px;
+  }
+
+  /* 封面图和黑胶盘尺寸调整、居中 */
   .vinyl-wrapper {
+    order: 2;
     width: 60vw;
     height: 60vw;
     max-width: 200px;
     max-height: 200px;
+    margin: 10px auto;
   }
 
-  #songInfo {
-    font-size: 14px;
-  }
-
+  /* 歌词样式 */
   #lyrics {
+    order: 3;
     font-size: 14px;
-    line-height: 1.6em;
-    max-height: 4.8em;
-  }
-
-  audio {
-    width: 100%;
-  }
-
-  #disclaimer-overlay > div {
-    width: 90%;
-    padding: 16px;
-    font-size: 14px;
-  }
-
-  #disclaimer-overlay h2 {
-    font-size: 18px;
-  }
-
-  .title, .subtitle {
-    font-size: 18px;
     text-align: center;
+    line-height: 1.6em;
+    margin: 15px 0;
   }
 
-  .container {
-    padding: 10px;
+  /* 播放器位置与宽度 */
+  audio {
+    order: 4;
+    width: 100%;
+    display: block;
+    margin: 0 auto 20px;
+  }
+
+  /* 歌曲列表保留最下 */
+  .song-list {
+    order: 5;
+    margin-top: 20px;
   }
 }
   </style>
