@@ -456,32 +456,32 @@
         .then(data => parseLyrics(data));
     }
 
-    function parseLyrics(data) {
-      // 去除 UTF-8 BOM
-      if (data.charCodeAt(0) === 0xFEFF) {
-        data = data.slice(1);
+   function parseLyrics(data) {
+  // 去除 UTF-8 BOM
+  if (data.charCodeAt(0) === 0xFEFF) {
+    data = data.slice(1);
+  }
+
+  const lines = data.split("\n");
+  const lyrics = [];
+
+  lines.forEach(line => {
+    // 修正后的正则：匹配形如 [00:12.34]歌词内容 的格式
+    const match = line.match(/(\d{2}):(\d{2})\.(\d{2,3})(.*)/);
+    if (match) {
+      const min = parseInt(match[1]);
+      const sec = parseInt(match[2]);
+      const ms = parseInt(match[3].padEnd(3, '0'));
+      const time = min * 60 + sec + ms / 1000;
+      const text = match[4].trim();
+      if (text) {
+        lyrics.push({ time, text });
       }
-
-      const lines = data.split("\n");
-      const lyrics = [];
-
-      lines.forEach(line => {
-        // 正确匹配：00:21.77歌词内容，时间戳与歌词之间没有空格
-        const match = line.match(/(\d{2}):(\d{2})\.(\d{2,3})(.*)/);
-        if (match) {
-          const min = parseInt(match[1]);   // 分钟部分
-          const sec = parseInt(match[2]);   // 秒钟部分
-          const ms = parseInt(match[3].padEnd(3, '0')); // 毫秒部分（填充到3位）
-          const time = min * 60 + sec + ms / 1000;  // 转换为总秒数
-          const text = match[4].trim();      // 歌词文本
-          if (text) {
-            lyrics.push({ time, text });
-          }
-        }
-      });
-
-      return lyrics;
     }
+  });
+
+  return lyrics;
+}
 
     function getSongInfo(file) {
       const fileName = file.split('/').pop();
