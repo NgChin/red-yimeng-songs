@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- 版权所有 © 2025 红色沂蒙纪念馆 / Red Yimeng Memorial Hall -->
+  <!-- 本网页内容受版权保护，未经许可禁止复制、下载、克隆或再发布 -->
+  <meta charset="UTF-8">
+  <title>红色歌曲伴我行</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background-color: #7b1c1c;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    /* 修改红条背景宽度和内容 */
+    h1 {
+      width: 100%;
+      padding: 20px 10px; /* 上下增加padding来让红条更宽 */
+      text-align: center;
+      background-color: #5a1212;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Logo样式 */
+    #logo {
+      height: 100px; 
+      width: auto;  /* 宽度自动适应，保持比例 */
+      margin-right: 20px; /* 图标与文字之间的间距 */
+    }
+
+    /* 主标题样式 */
+    .main-title {
+      font-size: 40px; /* 主标题字体较大 */
+      font-weight: bold; /* 加粗 */
+      margin: 0;
+    }
+
+    /* 副标题样式 */
+    .sub-title {
+      font-size: 20px;
+      margin-top: 10px; /* 主副标题之间间距 */
+    }
+
+    .player-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 30px;
+      width: 100%;
+      padding: 0 20px;
+      box-sizing: border-box;
+    }
+
+    .vinyl-wrapper {
+      position: relative;
+      width: 220px;
+      height: 220px;
+      margin-bottom: 20px;
+    }
+
+    .vinyl {
+      width: 100%;
+      height: 100%;
+      background: url('./img/icon1.png') no-repeat center/cover;
+      border-radius: 50%;
+      animation: spin 5s linear infinite;
+    }
+
+    .cover {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 80px;
+      height: 80px;
+      transform: translate(-50%, -50%);
+      border-radius: 50%;
+      overflow: hidden;
+      border: 2px solid #fff;
+    }
+
+    .cover img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    @keyframes spin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    audio {
+      width: 100%;
+      max-width: 500px;
+      margin-top: 20px;
+    }
+
+    #lyrics {
+      width: 100%;
+      max-width: 500px;
+      margin-top: 20px;
+      text-align: left;
+      white-space: pre-wrap;
+      overflow-y: auto;
+      line-height: 1.6em;
+      max-height: 6.4em; /* PC端：限制为 4行 */
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .highlight {
+      color: yellow;
+      font-weight: bold;
+      transform: scale(1.1); /* 高亮行略微放大 */
+    }
+
+    /* 歌名和歌手样式 */
+    #songInfo {
+      margin-bottom: 10px;
+      text-align: center;
+    }
+
+    #songTitle {
+      font-size: 1.2em;
+      font-weight: bold;
+    }
+
+    #artistName {
+      font-size: 0.9em;
+      opacity: 0.85;
+    }
+
+    /* PC 横向布局 */
+    @media (min-width: 768px) {
+      .player-container {
+        flex-direction: row;
+        justify-content: center;
+        align-items: flex-start;
+        gap: 40px;
+      }
+
+      #songInfo {
+        text-align: left;
+      }
+
+      .right-panel {
+        flex: 1;
+        max-width: 500px;
+      }
+
+      /* 显示 4 行歌词，设置 max-height */
+      #lyrics {
+        max-height: 6.4em; /* 4 行 */
+      }
+    }
+
+    /* 手机竖屏布局 */
+    @media (max-width: 767px) {
+      .player-container {
+        flex-direction: column;
+        align-items: center;
+      }
+
+      #lyrics {
+        max-height: 3.2em; /* 2 行 */
+        text-align: center;
+        line-height: 1.6em;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- 红条背景区域 -->
+  <h1>
+    <img src="./img/logo.png" alt="Logo" id="logo"> <!-- 插入Logo图片 -->
+    <div>
+      <div class="main-title">红色沂蒙纪念馆</div>
+      <div class="sub-title">"红色歌曲伴我行"系统（测试）</div>
+    </div>
+  </h1>
+
+  <div class="player-container">
+    <!-- 左侧：黑胶与封面 -->
+    <div class="vinyl-wrapper">
+      <div class="vinyl" id="vinyl">
+        <div class="cover" id="cover">
+          <img src="https://via.placeholder.com/80x80.png?text=封面" id="coverImage" alt="封面图">
+        </div>
+      </div>
+    </div>
+
+    <!-- 右侧：信息、歌词、音频 -->
+    <div class="right-panel">
+      <div id="songInfo">
+        <div id="songTitle">歌曲名</div>
+        <div id="artistName">歌手名</div>
+      </div>
+      <div id="lyrics"></div>
+      <audio id="audioPlayer" controls></audio>
+    </div>
+  </div>
+  
+ <!-- 添加底部版权信息 -->
+<div class="footer">
+  <div>红色沂蒙纪念馆 | Red Yimeng Memorial Hall</div>
+  <div>联系电话：4399-000000 地址：山东省临沂市沂水县顺天河路4号</div>
+  <div>本AI对话系统得益于ChatGPT大力帮助、网易云的音源支持以及Github的免费挂载支持，在此特表感谢</div>
+</div>
+
+<div id="disclaimer-overlay" style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.8); color: white; z-index: 9999; display: flex; align-items: center; justify-content: center;">
+  <div style="background: #fff; color: #000; max-width: 600px; padding: 30px; border-radius: 10px; text-align: center; box-shadow: 0 4px 12px rgba(0,0,0,0.3);">
+    <h2>温馨提示</h2>
+    <p>本站仅做本馆“红色歌曲伴我行”活动测试使用。NFC音乐卡片为活动期间免费测试使用，不存在任何商业盈利行为。</p>
+    <p>相关歌曲来自网易云音乐，版权归作者和出版方所有，本馆不享有任何音乐版权。</p>
+    <p>禁止以任何形式复制、下载、爬取本网站音乐或其他内容。如因侵权造成损失，本馆概不负责。</p>
+    <p>本提示仅显示一次。</p>
+    <p>如果您同意以上内容，请点击确认并进入网站。</p>
+    <div style="margin-top: 20px;">
+      <button onclick="agreeDisclaimer()" style="padding: 10px 20px; margin-right: 10px; background-color: #d32f2f; color: white; border: none; border-radius: 5px;">确认同意</button>
+      <button onclick="exitSite()" style="padding: 10px 20px; background-color: #aaa; color: white; border: none; border-radius: 5px;">退出</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  window.onload = function() {
+    const agreed = localStorage.getItem('disclaimerAgreed');
+    if (agreed === 'yes') {
+      document.getElementById("disclaimer-overlay").style.display = "none";
+    }
+  }
+
+  function agreeDisclaimer() {
+    localStorage.setItem('disclaimerAgreed', 'yes');
+    document.getElementById("disclaimer-overlay").style.display = "none";
+  }
+
+  function exitSite() {
+    window.location.href = "https://www.baidu.com";
+  }
+</script>
+
+<style>
+  .footer {
+    background-color: #5a1212;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    font-size: 0.8em; /* 缩小字体大小 */
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    z-index: 10;
+  }
+
+  .footer div {
+    margin-bottom: 8px; /* 调整文字间距 */
+  }
+
+  /* 增加底部空间以避免遮挡输入框和聊天框 */
+  .chat-container {
+    margin-bottom: 100px; /* 调整底部空间，避免与固定底部版权信息重叠 */
+  }
+
+  .input-box {
+    margin-bottom: 100px; /* 调整底部空间，避免与固定底部版权信息重叠 */
+  }
+</style>
+
+  <script>
+    const songs = [
+  {
+    file: "./redsongs/audio/爱我中华-宋祖英.mp3",
+    cover: "./redsongs/cover/爱我中华-宋祖英.jpg",
+    lyricsFile: "./redsongs/lyrics/爱我中华-宋祖英.lrc"
+  },
+  {
+    file: "./redsongs/audio/东方红-北京市少年宫合唱团.mp3",
+    cover: "./redsongs/cover/东方红-北京市少年宫合唱团.jpg",
+    lyricsFile: "./redsongs/lyrics/东方红-北京市少年宫合唱团.lrc"
+  },
+  {
+    file: "./redsongs/audio/歌唱祖国-东方红合唱队.mp3",
+    cover: "./redsongs/cover/歌唱祖国-东方红合唱队.jpg",
+    lyricsFile: "./redsongs/lyrics/歌唱祖国-东方红合唱队.lrc"
+  },
+  {
+    file: "./redsongs/audio/今天是你的生日-董文华.mp3",
+    cover: "./redsongs/cover/今天是你的生日-董文华.jpg",
+    lyricsFile: "./redsongs/lyrics/今天是你的生日-董文华.lrc"
+  },
+  {
+    file: "./redsongs/audio/没有共产党就没有新中国-中国人民解放军军乐团.mp3",
+    cover: "./redsongs/cover/没有共产党就没有新中国-中国人民解放军军乐团.jpg",
+    lyricsFile: "./redsongs/lyrics/没有共产党就没有新中国-中国人民解放军军乐团.lrc"
+  },
+  {
+    file: "./redsongs/audio/茉莉花-彭丽媛.mp3",
+    cover: "./redsongs/cover/茉莉花-彭丽媛.jpg",
+    lyricsFile: "./redsongs/lyrics/茉莉花-彭丽媛.lrc"
+  },
+  {
+    file: "./redsongs/audio/三大纪律八项注意-霍勇.mp3",
+    cover: "./redsongs/cover/三大纪律八项注意-霍勇.jpg",
+    lyricsFile: "./redsongs/lyrics/三大纪律八项注意-霍勇.lrc"
+  },
+  {
+    file: "./redsongs/audio/三大纪律八项注意-中国交响乐团.mp3",
+    cover: "./redsongs/cover/三大纪律八项注意-中国交响乐团.jpg",
+    lyricsFile: "./redsongs/lyrics/三大纪律八项注意-中国交响乐团.lrc"
+  },
+  {
+    file: "./redsongs/audio/谁不说俺家乡好-彭丽媛.mp3",
+    cover: "./redsongs/cover/谁不说俺家乡好-彭丽媛.jpg",
+    lyricsFile: "./redsongs/lyrics/谁不说俺家乡好-彭丽媛.lrc"
+  },
+  {
+    file: "./redsongs/audio/说句心里话-阎维文.mp3",
+    cover: "./redsongs/cover/说句心里话-阎维文.jpg",
+    lyricsFile: "./redsongs/lyrics/说句心里话-阎维文.lrc"
+  },
+  {
+    file: "./redsongs/audio/我爱你，中国-中央乐团合唱团.mp3",
+    cover: "./redsongs/cover/我爱你，中国-中央乐团合唱团.jpg",
+    lyricsFile: "./redsongs/lyrics/我爱你，中国-中央乐团合唱团.lrc"
+  },
+  {
+    file: "./redsongs/audio/我爱你中国-北京师大附中合唱团.mp3",
+    cover: "./redsongs/cover/我爱你中国-北京师大附中合唱团.jpg",
+    lyricsFile: "./redsongs/lyrics/我爱你中国-北京师大附中合唱团.lrc"
+  },
+  {
+    file: "./redsongs/audio/我的祖国 (电影《上甘岭》插曲)-彭丽媛.mp3",
+    cover: "./redsongs/cover/我的祖国 (电影《上甘岭》插曲)-彭丽媛.jpg",
+    lyricsFile: "./redsongs/lyrics/我的祖国 (电影《上甘岭》插曲)-彭丽媛.lrc"
+  },
+  {
+    file: "./redsongs/audio/我和我的祖国-中央乐团合唱团.mp3",
+    cover: "./redsongs/cover/我和我的祖国-中央乐团合唱团.jpg",
+    lyricsFile: "./redsongs/lyrics/我和我的祖国-中央乐团合唱团.lrc"
+  },
+  {
+    file: "./redsongs/audio/我为祖国献石油-刘秉义.mp3",
+    cover: "./redsongs/cover/我为祖国献石油-刘秉义.jpg",
+    lyricsFile: "./redsongs/lyrics/我为祖国献石油-刘秉义.lrc"
+  },
+  {
+    file: "./redsongs/audio/学习雷锋好榜样-战友文工团.mp3",
+    cover: "./redsongs/cover/学习雷锋好榜样-战友文工团.jpg",
+    lyricsFile: "./redsongs/lyrics/学习雷锋好榜样-战友文工团.lrc"
+  },
+  {
+    file: "./redsongs/audio/学习雷锋好榜样-中央人民广播电台少年广播合唱团.mp3",
+    cover: "./redsongs/cover/学习雷锋好榜样-中央人民广播电台少年广播合唱团.jpg",
+    lyricsFile: "./redsongs/lyrics/学习雷锋好榜样-中央人民广播电台少年广播合唱团.lrc"
+  },
+  {
+    file: "./redsongs/audio/沂蒙红嫂-张凤英.mp3",
+    cover: "./redsongs/cover/沂蒙红嫂-张凤英.jpg",
+    lyricsFile: "./redsongs/lyrics/沂蒙红嫂-张凤英.lrc"
+  },
+  {
+    file: "./redsongs/audio/沂蒙山小调(经典版)-张凤英.mp3",
+    cover: "./redsongs/cover/沂蒙山小调(经典版)-张凤英.jpg",
+    lyricsFile: "./redsongs/lyrics/沂蒙山小调(经典版)-张凤英.lrc"
+  },
+  {
+    file: "./redsongs/audio/沂蒙颂-彭丽媛.mp3",
+    cover: "./redsongs/cover/沂蒙颂-彭丽媛.jpg",
+    lyricsFile: "./redsongs/lyrics/沂蒙颂-彭丽媛.lrc"
+  },
+  {
+    file: "./redsongs/audio/义勇军进行曲-上海乐团管弦乐团与合唱团.mp3",
+    cover: "./redsongs/cover/义勇军进行曲-上海乐团管弦乐团与合唱团.jpg",
+    lyricsFile: "./redsongs/lyrics/义勇军进行曲-上海乐团管弦乐团与合唱团.lrc"
+  },
+  {
+    file: "./redsongs/audio/在希望的田野上-彭丽媛.mp3",
+    cover: "./redsongs/cover/在希望的田野上-彭丽媛.jpg",
+    lyricsFile: "./redsongs/lyrics/在希望的田野上-彭丽媛.lrc"
+  },
+  {
+    file: "./redsongs/audio/咱们工人有力量-中国广播艺术团合唱团.mp3",
+    cover: "./redsongs/cover/咱们工人有力量-中国广播艺术团合唱团.jpg",
+    lyricsFile: "./redsongs/lyrics/咱们工人有力量-中国广播艺术团合唱团.lrc"
+  }
+];
+
+    const player = document.getElementById("audioPlayer");
+    const vinyl = document.getElementById("vinyl");
+    const coverImage = document.getElementById("coverImage");
+    const lyricsDiv = document.getElementById("lyrics");
+    const songTitleDom = document.getElementById("songTitle");
+    const artistNameDom = document.getElementById("artistName");
+
+    function fetchLyrics(url) {
+      return fetch(url)
+        .then(response => response.text())
+        .then(data => parseLyrics(data));
+    }
+
+    function parseLyrics(data) {
+      // 去除 UTF-8 BOM
+      if (data.charCodeAt(0) === 0xFEFF) {
+        data = data.slice(1);
+      }
+
+      const lines = data.split("\n");
+      const lyrics = [];
+
+      lines.forEach(line => {
+        // 正确匹配：00:21.77歌词内容，时间戳与歌词之间没有空格
+        const match = line.match(/(\d{2}):(\d{2})\.(\d{2,3})(.*)/);
+        if (match) {
+          const min = parseInt(match[1]);   // 分钟部分
+          const sec = parseInt(match[2]);   // 秒钟部分
+          const ms = parseInt(match[3].padEnd(3, '0')); // 毫秒部分（填充到3位）
+          const time = min * 60 + sec + ms / 1000;  // 转换为总秒数
+          const text = match[4].trim();      // 歌词文本
+          if (text) {
+            lyrics.push({ time, text });
+          }
+        }
+      });
+
+      return lyrics;
+    }
+
+    function getSongInfo(file) {
+      const fileName = file.split('/').pop();
+      const [title, artistWithExt] = fileName.split('-');
+      const artist = artistWithExt.replace('.mp3', '');
+      return { songTitle: title, artist };
+    }
+
+    function playRandomSong() {
+      const index = Math.floor(Math.random() * songs.length);
+      const selected = songs[index];
+      const { songTitle, artist } = getSongInfo(selected.file);
+
+      document.title = `${songTitle} - ${artist}`;
+      songTitleDom.textContent = songTitle;
+      artistNameDom.textContent = artist;
+
+      player.src = selected.file;
+      coverImage.src = selected.cover;
+
+      fetchLyrics(selected.lyricsFile).then(lyrics => {
+        displayLyrics(lyrics);
+        player.play();
+      });
+    }
+
+    function displayLyrics(lyrics) {
+      lyricsDiv.innerHTML = '';
+      lyrics.forEach(lyric => {
+        const div = document.createElement("div");
+        div.classList.add("lyric");
+        div.textContent = lyric.text;
+        div.dataset.time = lyric.time;
+        lyricsDiv.appendChild(div);
+      });
+    }
+
+    function syncLyrics() {
+      const currentTime = player.currentTime;
+      const lyricElements = document.querySelectorAll('#lyrics .lyric');
+      let currentLyric = null;
+
+      lyricElements.forEach(lyricElement => {
+        const lyricTime = parseFloat(lyricElement.dataset.time);
+        if (currentTime >= lyricTime) {
+          currentLyric = lyricElement;
+        }
+        lyricElement.classList.remove('highlight');
+      });
+
+      if (currentLyric) {
+        currentLyric.classList.add('highlight');
+        currentLyric.scrollIntoView({
+          behavior: 'smooth',
+          block: 'center'  // 保证高亮行始终居中可见
+        });
+      }
+    }
+
+    player.addEventListener("play", () => {
+      vinyl.style.animationPlayState = 'running';
+      syncLyrics();
+    });
+
+    player.addEventListener("pause", () => {
+      vinyl.style.animationPlayState = 'paused';
+    });
+
+    player.addEventListener("timeupdate", syncLyrics);
+
+    window.addEventListener("load", () => {
+      vinyl.style.animationPlayState = 'paused';
+      playRandomSong();
+    });
+	
+  </script>
+  
+  
+</body>
+</html>
