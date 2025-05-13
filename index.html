@@ -473,7 +473,7 @@
           const sec = parseInt(match[2]);   // 秒钟部分
           const ms = parseInt(match[3].padEnd(3, '0')); // 毫秒部分（填充到3位）
           const time = min * 60 + sec + ms / 1000;  // 转换为总秒数
-          const text = match[4].replace(/^/, '').trim();      // 歌词文本
+          const text = match[4].replace(/^]/, '').trim();      // 歌词文本
           if (text) {
             lyrics.push({ time, text });
           }
