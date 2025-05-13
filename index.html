@@ -3,6 +3,7 @@
 <head>
   <!-- 版权所有 © 2025 红色沂蒙纪念馆 / Red Yimeng Memorial Hall -->
   <!-- 本网页内容受版权保护，未经许可禁止复制、下载、克隆或再发布 -->
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta charset="UTF-8">
   <title>红色歌曲伴我行</title>
   <style>
@@ -160,19 +161,52 @@
       }
     }
 
-    /* 手机竖屏布局 */
     @media (max-width: 767px) {
-      .player-container {
-        flex-direction: column;
-        align-items: center;
-      }
+  body {
+    font-size: 16px;
+    padding: 8px;
+  }
 
-      #lyrics {
-        max-height: 3.2em; /* 2 行 */
-        text-align: center;
-        line-height: 1.6em;
-      }
-    }
+  .vinyl-wrapper {
+    width: 60vw;
+    height: 60vw;
+    max-width: 200px;
+    max-height: 200px;
+  }
+
+  #songInfo {
+    font-size: 14px;
+  }
+
+  #lyrics {
+    font-size: 14px;
+    line-height: 1.6em;
+    max-height: 4.8em;
+  }
+
+  audio {
+    width: 100%;
+  }
+
+  #disclaimer-overlay > div {
+    width: 90%;
+    padding: 16px;
+    font-size: 14px;
+  }
+
+  #disclaimer-overlay h2 {
+    font-size: 18px;
+  }
+
+  .title, .subtitle {
+    font-size: 18px;
+    text-align: center;
+  }
+
+  .container {
+    padding: 10px;
+  }
+}
   </style>
 </head>
 <body>
