@@ -467,7 +467,7 @@
 
   lines.forEach(line => {
     // 修正后的正则：匹配形如 [00:12.34]歌词内容 的格式
-    const match = line.match(/(\d{2}):(\d{2})\.(\d{2,3})(.*)/);
+    const match = line.match(/[](\d{2}):(\d{2})\.(\d{2,3})(.*)/);
     if (match) {
       const min = parseInt(match[1]);
       const sec = parseInt(match[2]);
