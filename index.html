@@ -227,14 +227,7 @@
     margin: 10px 5px;
 	  display: flex;
   }
-
-	   .player-container {
-		   display: flex;
-  flex-direction: column;
-  align-items: center;
-		   width: 100%;
-}
-
+	   
 	   #logo {
 		   height: 70px;
 		   margin-right: 10px;
@@ -265,10 +258,10 @@
 
   /* 歌名和歌手信息居中 */
   #songInfo {
-    order: 1;
     text-align: center;
     margin-top: 10px;
-	  margin-bottom: 15px;
+	  margin-bottom: 10px;
+	  width: 100%
   }
 
 	   #songTitle {
@@ -282,7 +275,14 @@
 	   }
 
   /* 封面图和黑胶盘尺寸调整、居中 */
-  .vinyl-wrapper {
+  .player-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+  }
+	   
+	   .vinyl-wrapper {
     width: 60vw;
     height: 60vw;
     max-width: 200px;
@@ -306,13 +306,17 @@
 
   /* 播放器位置与宽度 */
   audio {
-    width: 90%;
+    width: 100%;
+	  max-width: 100%;
     display: block;
-    margin: 0 auto 20px;
+    margin: 0 auto;
+	  padding: 0 10px;
+	  position: fixed;
+	  bottom: 0;
+	  left: 0;
+	  z-index: 1000;
+	  background color: #7b1c1c;
   }
-	   .song-list{
-		   margin:0 auto 20px;
-	   }
 }
   </style>
 </head>
